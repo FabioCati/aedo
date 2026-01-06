@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
@@ -35,24 +35,21 @@ fun App() {
         NavDisplay(
             backStack = backStack,
             modifier = Modifier.fillMaxSize(),
-            entryProvider = { key ->
-                key as Destination
-                when (key) {
-                    Destination.Home -> NavEntry(key) {
-                        HomeRoute(
-                            onNextPressed = {
-                                backStack.add(Destination.MovieDetail("1"))
-                            }
-                        )
-                    }
+            entryProvider = entryProvider {
+                entry<Destination.Home> {
+                    HomeRoute(
+                        onNextPressed = {
+                            backStack.add(Destination.MovieDetail("1"))
+                        }
+                    )
+                }
 
-                    is Destination.MovieDetail -> NavEntry(key) {
-                        Text("ciao")
-                    }
+                entry<Destination.MovieDetail> {
+                    Text("ciao")
+                }
 
-                    is Destination.SeriesDetail -> NavEntry(key) {
-                        Text("ciao")
-                    }
+                entry<Destination.SeriesDetail> {
+                    Text("ciao")
                 }
             }
         )
