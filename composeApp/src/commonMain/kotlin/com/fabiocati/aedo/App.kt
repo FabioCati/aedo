@@ -1,7 +1,6 @@
 package com.fabiocati.aedo
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,7 +10,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import com.fabiocati.aedo.navigation.Destination
-import com.fabiocati.aedo.screens.HomeScreen
+import com.fabiocati.aedo.screens.home.HomeRoute
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -19,8 +18,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-
+    AedoTheme {
         val backStack = rememberNavBackStack(
             SavedStateConfiguration {
                 serializersModule = SerializersModule {
@@ -41,7 +39,7 @@ fun App() {
                 key as Destination
                 when (key) {
                     Destination.Home -> NavEntry(key) {
-                        HomeScreen(
+                        HomeRoute(
                             onNextPressed = {
                                 backStack.add(Destination.MovieDetail("1"))
                             }
@@ -49,11 +47,7 @@ fun App() {
                     }
 
                     is Destination.MovieDetail -> NavEntry(key) {
-                        HomeScreen(
-                            onNextPressed = {
-                                backStack.removeLast()
-                            }
-                        )
+                        Text("ciao")
                     }
 
                     is Destination.SeriesDetail -> NavEntry(key) {
