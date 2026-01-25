@@ -1,5 +1,6 @@
 [versions]
 agp = "8.13.2"
+arrow = "2.2.1.1"
 android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "36"
@@ -15,14 +16,19 @@ compose-multiplatform-lifecycle = "2.10.0-alpha07"
 composeMultiplatform = "1.9.3"
 junit = "4.13.2"
 kotlin = "2.3.0"
+kotlinx-coroutines = "1.10.2"
 kotlinx-serialization = "1.9.0"
 ktor = "3.3.3"
 multiplatform-nav3-ui = "1.0.0-alpha06"
 kotlinStdlib = "2.3.0"
 runner = "1.7.0"
 core = "1.7.0"
+tmdbApi = "1.7.1"
+gradle-secrets = "2.0.1"
 
 [libraries]
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrow" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "androidx-compose-material3" }
@@ -38,12 +44,17 @@ jetbrains-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:naviga
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
+tmdb-api = { module = "app.moviebase:tmdb-api", version.ref = "tmdbApi" }
+
+[bundles]
+arrowKt = ["arrow-core", "arrow-fx-coroutines"]
 
 
 [plugins]
@@ -55,3 +66,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 androidLint = { id = "com.android.lint", version.ref = "agp" }
+gradle-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "gradle-secrets" }
