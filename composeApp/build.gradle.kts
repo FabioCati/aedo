@@ -46,6 +46,7 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             implementation(libs.androidx.compose.material3)
+            implementation(project(":models"))
         }
         appleMain.dependencies {
             implementation(libs.ktor.client.darwin)
