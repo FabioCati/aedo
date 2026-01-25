@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
@@ -21,16 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.fabiocati.aedo.AedoTheme
-import com.fabiocati.aedo.model.HomeModel
-import com.fabiocati.aedo.model.mickey17Data
+import com.fabiocati.aedo.models.Movie
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun FeaturedContentPager(
-    featuredElements: List<HomeModel>,
+    featuredElements: List<Movie>,
     modifier: Modifier = Modifier
 ) {
 
@@ -48,7 +47,7 @@ fun FeaturedContentPager(
                 modifier = Modifier.fillMaxWidth().aspectRatio(2 / 3f)
             ) {
                 AsyncImage(
-                    model = element.bannerUrl,
+                    model = element.backdropPath,
                     contentScale = ContentScale.Crop,
                     contentDescription = null,
                     modifier = Modifier.fillMaxSize()
@@ -72,9 +71,9 @@ fun FeaturedContentPager(
                         .padding(bottom = 32.dp)
                         .padding(horizontal = 16.dp)
                 ) {
-                    if (element.logoUrl != null) {
+                    if (element.logoPath != null) {
                         AsyncImage(
-                            model = element.logoUrl,
+                            model = element.logoPath,
                             contentDescription = null,
                             alignment = Alignment.BottomStart,
                             modifier = Modifier.fillMaxWidth(fraction = 0.8f)
@@ -89,9 +88,11 @@ fun FeaturedContentPager(
                         Modifier.height(16.dp)
                     )
                     Text(
-                        text = element.shortDescription,
+                        text = element.overview,
                         style = MaterialTheme.typography.bodyLarge,
                         color = Color.White,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Spacer(
                         Modifier.height(8.dp)
@@ -120,10 +121,7 @@ fun FeaturedContentPager(
 private fun FeaturedContentPagerPreview() {
     AedoTheme {
         FeaturedContentPager(
-            featuredElements = listOf(
-                mickey17Data,
-                mickey17Data
-            )
+            featuredElements = listOf()
         )
     }
 }

@@ -46,6 +46,12 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             implementation(libs.androidx.compose.material3)
+            implementation(libs.bundles.arrowKt)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
+            implementation(project(":core:tvdbService"))
             implementation(project(":models"))
         }
         appleMain.dependencies {

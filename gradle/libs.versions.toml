@@ -25,6 +25,7 @@ runner = "1.7.0"
 core = "1.7.0"
 tmdbApi = "1.7.1"
 gradle-secrets = "2.0.1"
+koin = "4.1.1"
 
 [libraries]
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
@@ -52,6 +53,11 @@ kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", versio
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
 tmdb-api = { module = "app.moviebase:tmdb-api", version.ref = "tmdbApi" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
+koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation" }
 
 [bundles]
 arrowKt = ["arrow-core", "arrow-fx-coroutines"]

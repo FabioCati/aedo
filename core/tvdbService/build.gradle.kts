@@ -63,6 +63,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.tmdb.api)
                 implementation(libs.bundles.arrowKt)
+                implementation(libs.koin.core)
                 implementation(project(":models"))
             }
         }

@@ -21,7 +21,18 @@ internal class TmdbMovieMapper(
             id = tmdbMovie.id,
             title = tmdbMovie.title,
             overview = tmdbMovie.overview,
-            posterPath = tmdbMovie.posterPath,
+            posterPath = tmdbMovie.posterPath?.let {
+                TmdbImageUrlBuilder.build(
+                    it,
+                    TmdbImageSize.POSTER_W500
+                )
+            },
+            backdropPath = tmdbMovie.backdropPath?.let {
+                TmdbImageUrlBuilder.build(
+                    it,
+                    TmdbImageSize.BACKDROP_W1280
+                )
+            },
             logoPath = logoImage?.let {
                 TmdbImageUrlBuilder.build(
                     it.filePath,

@@ -1,0 +1,23 @@
+package com.fabiocati.aedo.tvdbservice.di
+
+import app.moviebase.tmdb.Tmdb3
+import com.fabiocati.aedo.tvdbservice.MoviesApi
+import com.fabiocati.aedo.tvdbservice.internal.Secrets
+import com.fabiocati.aedo.tvdbservice.internal.api.MoviesApiImpl
+import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbMovieMapper
+import org.koin.dsl.module
+
+val tvdbServiceModule = module {
+    single<MoviesApi> {
+        MoviesApiImpl(
+            tmdb = get<Tmdb3>(),
+            mapper = get<TmdbMovieMapper>()
+        )
+    }
+    single<TmdbMovieMapper> {
+        TmdbMovieMapper(get<Tmdb3>())
+    }
+    single<Tmdb3> {
+        Tmdb3(tmdbApiKey = Secrets.TMDB_API_KEY)
+    }
+}
