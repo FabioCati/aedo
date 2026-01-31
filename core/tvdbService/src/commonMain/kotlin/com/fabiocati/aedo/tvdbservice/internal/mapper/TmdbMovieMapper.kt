@@ -29,13 +29,13 @@ internal class TmdbMovieMapper(
             backdropPath = tmdbMovie.backdropPath?.let {
                 TmdbImageUrlBuilder.build(
                     it,
-                    TmdbImageSize.BACKDROP_W1280
+                    TmdbImageSize.ORIGINAL
                 )
             },
             logoPath = logoImage?.let {
                 TmdbImageUrlBuilder.build(
                     it.filePath,
-                    TmdbImageSize.LOGO_W300
+                    TmdbImageSize.ORIGINAL
                 )
             },
         )
