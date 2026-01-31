@@ -5,10 +5,9 @@ import app.moviebase.tmdb.image.TmdbImageSize
 import app.moviebase.tmdb.image.TmdbImageUrlBuilder
 import app.moviebase.tmdb.model.TmdbMovie
 import com.fabiocati.aedo.models.Movie
-import com.fabiocati.aedo.tvdbservice.internal.Secrets
 
 internal class TmdbMovieMapper(
-    private val tmdb: Tmdb3 = Tmdb3(Secrets.TMDB_API_KEY)
+    private val tmdb: Tmdb3
 ) {
 
     suspend fun toMovie(tmdbMovie: TmdbMovie): Movie {

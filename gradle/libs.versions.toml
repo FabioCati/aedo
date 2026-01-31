@@ -24,7 +24,6 @@ kotlinStdlib = "2.3.0"
 runner = "1.7.0"
 core = "1.7.0"
 tmdbApi = "1.7.1"
-gradle-secrets = "2.0.1"
 koin = "4.1.1"
 
 [libraries]
@@ -72,4 +71,3 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 androidLint = { id = "com.android.lint", version.ref = "agp" }
-gradle-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "gradle-secrets" }
