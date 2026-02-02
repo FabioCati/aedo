@@ -1,17 +1,12 @@
 package com.fabiocati.aedo
 
 import android.app.Application
-import com.fabiocati.aedo.tvdbservice.di.tvdbServiceModules
-import org.koin.core.context.startKoin
+import com.fabiocati.aedo.di.initKoin
 
-class AedoApplication: Application() {
+class AedoApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            modules(
-                tvdbServiceModules
-            )
-        }
+        initKoin()
     }
 }

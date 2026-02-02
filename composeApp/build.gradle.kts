@@ -51,7 +51,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
-            implementation(project(":core:tvdbService"))
+            implementation(project(":data:movies"))
             implementation(project(":models"))
         }
         appleMain.dependencies {

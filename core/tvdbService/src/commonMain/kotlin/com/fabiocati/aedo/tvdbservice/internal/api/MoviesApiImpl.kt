@@ -14,7 +14,7 @@ internal class MoviesApiImpl(
     private val mapper: TmdbMovieMapper
 ) : MoviesApi {
 
-    override suspend fun getPopularMovies(page: Int): Either<Any?, List<Movie>> {
+    override suspend fun getPopularMovies(page: Int): Either<Exception, List<Movie>> {
         val moviesResult = try {
             tmdb.movies.popular(
                 page = page

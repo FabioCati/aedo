@@ -31,3 +31,4 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":models")
 include(":core:tvdbService")
+include(":data:movies")

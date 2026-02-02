@@ -7,8 +7,9 @@ import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbMovieMapper
 import org.koin.dsl.module
 import secrets.Secrets
 
-val tvdbServiceModules = listOf(
-    module {
+
+object TvdbServiceModule {
+    fun get() = module {
         single<MoviesApi> {
             MoviesApiImpl(
                 tmdb = get<Tmdb3>(),
@@ -21,5 +22,5 @@ val tvdbServiceModules = listOf(
         single<Tmdb3> {
             Tmdb3(tmdbApiKey = Secrets.TVDB_API_KEY)
         }
-    },
-)
+    }
+}
