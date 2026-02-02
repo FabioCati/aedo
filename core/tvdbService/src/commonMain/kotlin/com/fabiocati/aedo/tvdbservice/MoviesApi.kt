@@ -6,5 +6,7 @@ import com.fabiocati.aedo.models.MovieDetails
 
 interface MoviesApi {
     suspend fun getPopularMovies(page: Int): Either<Exception, List<Movie>>
+    suspend fun getTrendingMovies(page: Int): Either<Exception, List<Movie>>
+    suspend fun getNetflixMovies(page: Int): Either<Exception, List<Movie>>
     suspend fun getMovieDetails(movieId: Int): MovieDetails
 }

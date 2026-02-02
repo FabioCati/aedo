@@ -4,6 +4,7 @@ import arrow.core.Either
 import com.fabiocati.aedo.data.movies.MovieRepository
 import com.fabiocati.aedo.models.Movie
 import com.fabiocati.aedo.models.MovieDetails
+import com.fabiocati.aedo.models.StreamingService
 import com.fabiocati.aedo.tvdbservice.MoviesApi
 
 internal class MovieRepositoryImpl(
@@ -12,6 +13,17 @@ internal class MovieRepositoryImpl(
 
     override suspend fun getPopularMovies(): Either<Exception, List<Movie>> {
         return api.getPopularMovies(page = 1)
+    }
+
+    override suspend fun getTrendingMovies(): Either<Exception, List<Movie>> {
+        return api.getTrendingMovies(page = 1)
+    }
+
+    override suspend fun getStreamingServiceMovies(streamingService: StreamingService): Either<Exception, List<Movie>> {
+        return when (streamingService) {
+            StreamingService.NETFLIX -> return api.getNetflixMovies(page = 1)
+            else -> Either.Left(Exception())
+        }
     }
 
     override suspend fun getMovieDetails(movieId: Int): MovieDetails = api.getMovieDetails(movieId = movieId)

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either
 import com.fabiocati.aedo.data.movies.MovieRepository
+import com.fabiocati.aedo.models.StreamingService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +19,9 @@ class HomeViewModel(
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
     init {
+        loadTrendingMovies()
         loadPopularMovies()
+        loadNetflixMovies()
     }
 
     private fun loadPopularMovies() {
@@ -27,7 +30,30 @@ class HomeViewModel(
             if (movies !is Either.Right) return@launch
             _uiState.update {
                 it.copy(
-                    featuredMovies = movies.value,
+                    popularMovies = movies.value
+                )
+            }
+        }
+    }
+
+    private fun loadTrendingMovies() {
+        viewModelScope.launch {
+            val movies = movieRepository.getTrendingMovies()
+            if (movies !is Either.Right) return@launch
+            _uiState.update {
+                it.copy(
+                    trendingMovies = movies.value
+                )
+            }
+        }
+    }
+
+    private fun loadNetflixMovies() {
+        viewModelScope.launch {
+            val movies = movieRepository.getStreamingServiceMovies(StreamingService.NETFLIX)
+            if (movies !is Either.Right) return@launch
+            _uiState.update {
+                it.copy(
                     netflixMovies = movies.value
                 )
             }
