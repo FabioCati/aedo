@@ -27,7 +27,8 @@ class HomeViewModel(
             if (movies !is Either.Right) return@launch
             _uiState.update {
                 it.copy(
-                    featuredMovies = movies.value
+                    featuredMovies = movies.value,
+                    netflixMovies = movies.value
                 )
             }
         }
