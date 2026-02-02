@@ -3,6 +3,7 @@ package com.fabiocati.aedo.tvdbservice.internal.api
 import app.moviebase.tmdb.Tmdb3
 import arrow.core.Either
 import com.fabiocati.aedo.models.Movie
+import com.fabiocati.aedo.models.MovieDetails
 import com.fabiocati.aedo.tvdbservice.MoviesApi
 import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbMovieMapper
 import kotlinx.coroutines.async
@@ -30,6 +31,14 @@ internal class MoviesApiImpl(
             }.awaitAll()
         }
         return Either.Right(movies)
+    }
+
+    override suspend fun getMovieDetails(movieId: Int): MovieDetails {
+        val detail = tmdb.movies.getDetails(
+            movieId = movieId,
+            language = "en-US"
+        )
+        return mapper.toMovieDetails(detail)
     }
 
 }

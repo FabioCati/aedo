@@ -30,6 +30,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun FeaturedContentPager(
     featuredElements: List<Movie>,
+    onMovieClicked: (Movie) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -98,7 +99,7 @@ fun FeaturedContentPager(
                         Modifier.height(8.dp)
                     )
                     Button(
-                        onClick = { },
+                        onClick = { onMovieClicked(element) },
                         shape = MaterialTheme.shapes.large,
                     ) {
                         Text(
@@ -121,7 +122,8 @@ fun FeaturedContentPager(
 private fun FeaturedContentPagerPreview() {
     AedoTheme {
         FeaturedContentPager(
-            featuredElements = listOf()
+            featuredElements = listOf(),
+            onMovieClicked = {}
         )
     }
 }

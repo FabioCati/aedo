@@ -13,7 +13,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 internal fun HomeScreen(
     uiState: HomeScreenUiState,
-    onNextPressed: () -> Unit,
+    onMovieClicked: (movieId: Int) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -22,7 +22,10 @@ internal fun HomeScreen(
     ) {
 
         FeaturedContentPager(
-            featuredElements = uiState.featuredMovies
+            featuredElements = uiState.featuredMovies,
+            onMovieClicked = {
+                onMovieClicked(it.id)
+            }
         )
     }
 }
@@ -34,7 +37,7 @@ private fun HomeScreenPreview() {
     AedoTheme {
         HomeScreen(
             uiState = uiState,
-            onNextPressed = {}
+            onMovieClicked = {}
         )
     }
 }

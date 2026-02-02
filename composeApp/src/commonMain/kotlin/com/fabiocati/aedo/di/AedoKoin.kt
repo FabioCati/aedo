@@ -2,6 +2,7 @@ package com.fabiocati.aedo.di
 
 import com.fabiocati.aedo.data.movies.di.MoviesModule
 import com.fabiocati.aedo.screens.home.HomeViewModel
+import com.fabiocati.aedo.screens.movieDetails.MovieDetailsViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.KoinConfiguration
@@ -21,7 +22,13 @@ fun initKoin(configuration: KoinConfiguration? = null) {
                         get()
                     )
                 }
-            })
-
+                viewModel { params ->
+                    MovieDetailsViewModel(
+                        movieId = params.get(),
+                        movieRepository = get()
+                    )
+                }
+            }
+        )
     }
 }

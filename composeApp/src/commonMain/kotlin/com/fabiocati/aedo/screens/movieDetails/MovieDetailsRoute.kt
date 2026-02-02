@@ -1,20 +1,22 @@
-package com.fabiocati.aedo.screens.home
+package com.fabiocati.aedo.screens.movieDetails
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
-fun HomeRoute(
-    onMovieClicked: (Int) -> Unit,
-    viewModel: HomeViewModel = koinViewModel()
+fun MovieDetailsRoute(
+    movieId: Int,
+    viewModel: MovieDetailsViewModel = koinViewModel {
+        parametersOf(movieId)
+    }
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    HomeScreen(
-        uiState = uiState,
-        onMovieClicked = onMovieClicked,
+    MovieDetailsScreen(
+        uiState = uiState
     )
 }

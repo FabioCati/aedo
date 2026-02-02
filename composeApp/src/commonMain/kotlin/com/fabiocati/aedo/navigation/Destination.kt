@@ -10,8 +10,5 @@ sealed interface Destination : NavKey {
     data object Home : Destination
 
     @Serializable
-    data class MovieDetail(val id: String) : Destination
-
-    @Serializable
-    data class SeriesDetail(val id: String) : Destination
+    data class MovieDetail(val id: Int) : Destination
 }

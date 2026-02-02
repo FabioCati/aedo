@@ -4,13 +4,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import com.fabiocati.aedo.navigation.Destination
 import com.fabiocati.aedo.screens.home.HomeRoute
+import com.fabiocati.aedo.screens.movieDetails.MovieDetailsRoute
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -25,7 +28,6 @@ fun App() {
                     polymorphic(NavKey::class) {
                         subclass(Destination.Home::class, Destination.Home.serializer())
                         subclass(Destination.MovieDetail::class, Destination.MovieDetail.serializer())
-                        subclass(Destination.SeriesDetail::class, Destination.SeriesDetail.serializer())
                     }
                 }
             },
@@ -35,21 +37,23 @@ fun App() {
         NavDisplay(
             backStack = backStack,
             modifier = Modifier.fillMaxSize(),
+            entryDecorators = listOf(
+                rememberSaveableStateHolderNavEntryDecorator(),
+                rememberViewModelStoreNavEntryDecorator()
+            ),
             entryProvider = entryProvider {
                 entry<Destination.Home> {
                     HomeRoute(
-                        onNextPressed = {
-                            backStack.add(Destination.MovieDetail("1"))
+                        onMovieClicked = { movieId ->
+                            backStack.add(Destination.MovieDetail(movieId))
                         }
                     )
                 }
 
                 entry<Destination.MovieDetail> {
-                    Text("ciao")
-                }
-
-                entry<Destination.SeriesDetail> {
-                    Text("ciao")
+                    MovieDetailsRoute(
+                        movieId = it.id
+                    )
                 }
             }
         )

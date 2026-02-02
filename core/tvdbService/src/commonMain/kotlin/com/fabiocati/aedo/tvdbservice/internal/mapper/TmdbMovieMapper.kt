@@ -4,7 +4,9 @@ import app.moviebase.tmdb.Tmdb3
 import app.moviebase.tmdb.image.TmdbImageSize
 import app.moviebase.tmdb.image.TmdbImageUrlBuilder
 import app.moviebase.tmdb.model.TmdbMovie
+import app.moviebase.tmdb.model.TmdbMovieDetail
 import com.fabiocati.aedo.models.Movie
+import com.fabiocati.aedo.models.MovieDetails
 
 internal class TmdbMovieMapper(
     private val tmdb: Tmdb3
@@ -38,6 +40,39 @@ internal class TmdbMovieMapper(
                     TmdbImageSize.ORIGINAL
                 )
             },
+        )
+    }
+
+    fun toMovieDetails(tmdbMovie: TmdbMovieDetail): MovieDetails {
+        return MovieDetails(
+            id = tmdbMovie.id,
+            title = tmdbMovie.title,
+            overview = tmdbMovie.overview ?: "",
+            posterPath = tmdbMovie.posterImage?.let {
+                TmdbImageUrlBuilder.build(
+                    it,
+                    TmdbImageSize.ORIGINAL
+                )
+            },
+            backdropPath = tmdbMovie.backdropImage?.let {
+                TmdbImageUrlBuilder.build(
+                    it,
+                    TmdbImageSize.ORIGINAL
+                )
+            },
+            logoPath = tmdbMovie.images?.logos?.firstOrNull()?.let {
+                TmdbImageUrlBuilder.build(
+                    it.filePath,
+                    TmdbImageSize.ORIGINAL
+                )
+            },
+            genres = tmdbMovie.genres.map { it.name },
+            cast = tmdbMovie.credits?.cast?.map { it.name } ?: emptyList(),
+            crew = tmdbMovie.credits?.crew?.map { it.name } ?: emptyList(),
+            duration = tmdbMovie.runtime.toString(),
+            yearOfProduction = tmdbMovie.releaseDate.toString(),
+            videos = tmdbMovie.videos?.results?.map { it.name ?: "" } ?: emptyList(),
+            languages = listOf(tmdbMovie.originalLanguage ?: ""),
         )
     }
 }
