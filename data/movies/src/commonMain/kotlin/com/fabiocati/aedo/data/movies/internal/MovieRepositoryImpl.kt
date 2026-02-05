@@ -20,10 +20,7 @@ internal class MovieRepositoryImpl(
     }
 
     override suspend fun getStreamingServiceMovies(streamingService: StreamingService): Either<Exception, List<Movie>> {
-        return when (streamingService) {
-            StreamingService.NETFLIX -> return api.getNetflixMovies(page = 1)
-            else -> Either.Left(Exception())
-        }
+        return api.getStreamingServiceMovies(streamingService, page = 1)
     }
 
     override suspend fun getMovieDetails(movieId: Int): MovieDetails = api.getMovieDetails(movieId = movieId)

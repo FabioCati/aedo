@@ -46,9 +46,29 @@ internal fun HomeScreen(
                     onMovieClicked(it.id)
                 }
             )
+        }
+        item {
             HomeScreenCategoryList(
                 categoryName = "Su Netflix",
                 movies = uiState.netflixMovies,
+                onMovieClicked = {
+                    onMovieClicked(it.id)
+                }
+            )
+        }
+        item {
+            HomeScreenCategoryList(
+                categoryName = "Su Disney+",
+                movies = uiState.disneyPlusMovies,
+                onMovieClicked = {
+                    onMovieClicked(it.id)
+                }
+            )
+        }
+        item {
+            HomeScreenCategoryList(
+                categoryName = "Su Apple TV",
+                movies = uiState.appleTvMovies,
                 onMovieClicked = {
                     onMovieClicked(it.id)
                 }

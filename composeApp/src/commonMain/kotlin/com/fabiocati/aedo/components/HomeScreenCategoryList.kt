@@ -28,7 +28,7 @@ fun HomeScreenCategoryList(
     onMovieClicked: (movie: Movie) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column {
+    Column(modifier = modifier.padding(bottom = 12.dp)) {
         Text(
             text = categoryName,
             style = MaterialTheme.typography.titleLarge,

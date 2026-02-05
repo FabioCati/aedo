@@ -22,6 +22,9 @@ class HomeViewModel(
         loadTrendingMovies()
         loadPopularMovies()
         loadNetflixMovies()
+        loadDisneyPlusMovies()
+        loadAppleTvMovies()
+        loadPrimeMovies()
     }
 
     private fun loadPopularMovies() {
@@ -55,6 +58,42 @@ class HomeViewModel(
             _uiState.update {
                 it.copy(
                     netflixMovies = movies.value
+                )
+            }
+        }
+    }
+
+    private fun loadDisneyPlusMovies() {
+        viewModelScope.launch {
+            val movies = movieRepository.getStreamingServiceMovies(StreamingService.DISNEY_PLUS)
+            if (movies !is Either.Right) return@launch
+            _uiState.update {
+                it.copy(
+                    disneyPlusMovies = movies.value
+                )
+            }
+        }
+    }
+
+    private fun loadAppleTvMovies() {
+        viewModelScope.launch {
+            val movies = movieRepository.getStreamingServiceMovies(StreamingService.APPLE_TV)
+            if (movies !is Either.Right) return@launch
+            _uiState.update {
+                it.copy(
+                    appleTvMovies = movies.value
+                )
+            }
+        }
+    }
+
+    private fun loadPrimeMovies() {
+        viewModelScope.launch {
+            val movies = movieRepository.getStreamingServiceMovies(StreamingService.AMAZON_PRIME)
+            if (movies !is Either.Right) return@launch
+            _uiState.update {
+                it.copy(
+                    primeMovies = movies.value
                 )
             }
         }

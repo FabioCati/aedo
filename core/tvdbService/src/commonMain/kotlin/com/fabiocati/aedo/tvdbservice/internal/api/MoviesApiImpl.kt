@@ -8,7 +8,9 @@ import app.moviebase.tmdb.model.TmdbTimeWindow
 import arrow.core.Either
 import com.fabiocati.aedo.models.Movie
 import com.fabiocati.aedo.models.MovieDetails
+import com.fabiocati.aedo.models.StreamingService
 import com.fabiocati.aedo.tvdbservice.MoviesApi
+import com.fabiocati.aedo.tvdbservice.internal.mapper.StreamingServiceMapper
 import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbMovieMapper
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -20,7 +22,8 @@ import kotlin.time.Clock
 
 internal class MoviesApiImpl(
     private val tmdb: Tmdb3,
-    private val mapper: TmdbMovieMapper
+    private val mapper: TmdbMovieMapper,
+    private val streamingServiceMapper: StreamingServiceMapper,
 ) : MoviesApi {
 
     override suspend fun getPopularMovies(page: Int): Either<Exception, List<Movie>> {
@@ -76,13 +79,11 @@ internal class MoviesApiImpl(
         return mapper.toMovieDetails(detail)
     }
 
-    override suspend fun getNetflixMovies(page: Int): Either<Exception, List<Movie>> {
+    override suspend fun getStreamingServiceMovies(streamingService: StreamingService, page: Int): Either<Exception, List<Movie>> {
+        val discoverCategory = streamingServiceMapper.toDiscoveryCategory(streamingService)
         return discoverMoviesByCategory(
             page = page,
-            discoverCategory = DiscoverCategory.OnStreaming.Netflix(
-                mediaType = TmdbMediaType.MOVIE,
-                watchRegion = "US"
-            )
+            discoverCategory = discoverCategory
         )
     }
 
