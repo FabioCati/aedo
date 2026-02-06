@@ -4,7 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +36,8 @@ internal fun HomeScreen(
                 featuredElements = uiState.trendingMovies,
                 onMovieClicked = {
                     onMovieClicked(it.id)
-                }
+                },
+                modifier = Modifier.fillMaxWidth().aspectRatio(2 / 3f)
             )
         }
 
