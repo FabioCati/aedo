@@ -2,6 +2,7 @@ package com.fabiocati.aedo.tvdbservice.internal.api
 
 import app.moviebase.tmdb.Tmdb3
 import app.moviebase.tmdb.discover.DiscoverCategory
+import app.moviebase.tmdb.model.AppendResponse
 import app.moviebase.tmdb.model.TmdbMediaType
 import app.moviebase.tmdb.model.TmdbMovie
 import app.moviebase.tmdb.model.TmdbTimeWindow
@@ -74,7 +75,8 @@ internal class MoviesApiImpl(
     override suspend fun getMovieDetails(movieId: Int): MovieDetails {
         val detail = tmdb.movies.getDetails(
             movieId = movieId,
-            language = "en-US"
+            language = "en-US",
+            appendResponses = listOf(AppendResponse.IMAGES)
         )
         return mapper.toMovieDetails(detail)
     }

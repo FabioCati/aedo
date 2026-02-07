@@ -1,5 +1,6 @@
 package com.fabiocati.aedo.models
 
+import kotlinx.datetime.LocalDate
 import kotlin.time.Duration
 
 data class MovieDetails(
@@ -12,8 +13,8 @@ data class MovieDetails(
     val genres: List<String>,
     val cast: List<String>, // Cast
     val crew: List<String>,
-    val duration: String,
-    val yearOfProduction : String,
+    val duration: Duration?,
+    val yearOfProduction : LocalDate?,
     val videos: List<String>,
     val languages: List<String>
 )

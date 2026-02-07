@@ -85,27 +85,13 @@ fun FeaturedContentPager(
                             .padding(bottom = 32.dp)
                             .padding(horizontal = 16.dp)
                     ) {
-                        if (element.logoPath != null) {
-                            AsyncImage(
-                                model = element.logoPath,
-                                contentDescription = null,
-                                alignment = Alignment.BottomCenter,
-                                modifier = Modifier
-                                    .fillMaxWidth(fraction = 0.8f)
-                                    .align(Alignment.CenterHorizontally)
-                                    .height(80.dp)
-
-                            )
-                        } else {
-                            Text(
-                                text = element.title,
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.headlineLarge.copy(Color.White),
-                                modifier = Modifier
-                                    .fillMaxWidth(fraction = 0.8f)
-                                    .align(Alignment.CenterHorizontally)
-                            )
-                        }
+                        LogoTitleComponent(
+                            logoPath = element.logoPath,
+                            title = element.title,
+                            modifier = Modifier
+                                .fillMaxWidth(fraction = 0.8f)
+                                .align(Alignment.CenterHorizontally)
+                        )
                         Spacer(
                             Modifier.height(16.dp)
                         )

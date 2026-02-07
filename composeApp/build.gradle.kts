@@ -47,6 +47,7 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.androidx.compose.material3)
             implementation(libs.bundles.arrowKt)
+            implementation(libs.kotlinx.datetime)
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
