@@ -2,8 +2,8 @@ package com.fabiocati.aedo.models.fake
 
 import com.fabiocati.aedo.models.Movie
 import com.fabiocati.aedo.models.MovieDetails
+import com.fabiocati.aedo.models.Trailer
 import kotlinx.datetime.LocalDate
-import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -28,6 +28,10 @@ val lordOfTheRingsDetails = MovieDetails(
     crew = listOf("Fantasy"),
     duration = 120.toDuration(DurationUnit.MINUTES),
     yearOfProduction = LocalDate(2003, 12, 19),
-    videos = listOf("bel video"),
+    trailers = listOf(Trailer(
+        url = "",
+        title = "Trailer #1",
+        thumbnail = ""
+    )),
     languages = listOf("italian", "english"),
 )

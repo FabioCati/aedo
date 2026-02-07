@@ -17,11 +17,12 @@ import com.fabiocati.aedo.screens.movieDetails.MovieDetailsRoute
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.getKoin
 
 @Composable
-@Preview
 fun App() {
     AedoTheme {
+        val koin = getKoin()
         val backStack = rememberNavBackStack(
             SavedStateConfiguration {
                 serializersModule = SerializersModule {
@@ -52,7 +53,10 @@ fun App() {
 
                 entry<Destination.MovieDetail> {
                     MovieDetailsRoute(
-                        movieId = it.id
+                        movieId = it.id,
+                        onTrailerClick = { trailer ->
+                            koin.get<UrlOpener>().openUrl(trailer.url)
+                        }
                     )
                 }
             }

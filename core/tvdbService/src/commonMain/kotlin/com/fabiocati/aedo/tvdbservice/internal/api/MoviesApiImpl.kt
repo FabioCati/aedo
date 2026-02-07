@@ -13,6 +13,7 @@ import com.fabiocati.aedo.models.StreamingService
 import com.fabiocati.aedo.tvdbservice.MoviesApi
 import com.fabiocati.aedo.tvdbservice.internal.mapper.StreamingServiceMapper
 import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbMovieMapper
+import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbTrailerMapper
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -76,7 +77,7 @@ internal class MoviesApiImpl(
         val detail = tmdb.movies.getDetails(
             movieId = movieId,
             language = "en-US",
-            appendResponses = listOf(AppendResponse.IMAGES)
+            appendResponses = listOf(AppendResponse.IMAGES, AppendResponse.VIDEOS)
         )
         return mapper.toMovieDetails(detail)
     }

@@ -15,6 +15,6 @@ data class MovieDetails(
     val crew: List<String>,
     val duration: Duration?,
     val yearOfProduction : LocalDate?,
-    val videos: List<String>,
+    val trailers: List<Trailer>,
     val languages: List<String>
 )

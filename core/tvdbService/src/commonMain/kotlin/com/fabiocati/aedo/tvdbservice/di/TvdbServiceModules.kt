@@ -5,6 +5,7 @@ import com.fabiocati.aedo.tvdbservice.MoviesApi
 import com.fabiocati.aedo.tvdbservice.internal.api.MoviesApiImpl
 import com.fabiocati.aedo.tvdbservice.internal.mapper.StreamingServiceMapper
 import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbMovieMapper
+import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbTrailerMapper
 import org.koin.dsl.module
 import secrets.Secrets
 
@@ -19,10 +20,16 @@ object TvdbServiceModule {
             )
         }
         single<TmdbMovieMapper> {
-            TmdbMovieMapper(get<Tmdb3>())
+            TmdbMovieMapper(
+                tmdb = get<Tmdb3>(),
+                trailerMapper = get<TmdbTrailerMapper>()
+            )
         }
         single<Tmdb3> {
             Tmdb3(tmdbApiKey = Secrets.TVDB_API_KEY)
+        }
+        factory {
+            TmdbTrailerMapper()
         }
         factory {
             StreamingServiceMapper()

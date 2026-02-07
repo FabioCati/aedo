@@ -5,20 +5,21 @@ import app.moviebase.tmdb.image.TmdbImageSize
 import app.moviebase.tmdb.image.TmdbImageUrlBuilder
 import app.moviebase.tmdb.model.TmdbMovie
 import app.moviebase.tmdb.model.TmdbMovieDetail
+import app.moviebase.tmdb.model.TmdbVideoSite
+import app.moviebase.tmdb.model.TmdbVideoType
 import com.fabiocati.aedo.models.Movie
 import com.fabiocati.aedo.models.MovieDetails
-import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 internal class TmdbMovieMapper(
-    private val tmdb: Tmdb3
+    private val tmdb: Tmdb3,
+    private val trailerMapper: TmdbTrailerMapper
 ) {
 
     suspend fun toMovie(tmdbMovie: TmdbMovie): Movie {
         val logoImage = tmdb.movies.getImages(
-            movieId =
-                tmdbMovie.id,
+            movieId = tmdbMovie.id,
             language = "en-US"
         ).logos.firstOrNull()
         return Movie(
@@ -47,6 +48,11 @@ internal class TmdbMovieMapper(
     }
 
     fun toMovieDetails(tmdbMovie: TmdbMovieDetail): MovieDetails {
+        val trailers = tmdbMovie.videos?.results
+            ?.filter { it.type == TmdbVideoType.TRAILER  && it.site == TmdbVideoSite.YOUTUBE }
+            ?.map { trailerMapper.toTrailer(it) }
+            ?: emptyList()
+
         return MovieDetails(
             id = tmdbMovie.id,
             title = tmdbMovie.title,
@@ -74,7 +80,7 @@ internal class TmdbMovieMapper(
             crew = tmdbMovie.credits?.crew?.map { it.name } ?: emptyList(),
             duration = tmdbMovie.runtime?.toDuration(DurationUnit.MINUTES),
             yearOfProduction = tmdbMovie.releaseDate,
-            videos = tmdbMovie.videos?.results?.map { it.name ?: "" } ?: emptyList(),
+            trailers = trailers,
             languages = listOf(tmdbMovie.originalLanguage ?: ""),
         )
     }
