@@ -56,6 +56,9 @@ fun App() {
                         movieId = it.id,
                         onTrailerClick = { trailer ->
                             koin.get<UrlOpener>().openUrl(trailer.url)
+                        },
+                        onMovieClick = { movieId ->
+                            backStack.add(Destination.MovieDetail(movieId))
                         }
                     )
                 }

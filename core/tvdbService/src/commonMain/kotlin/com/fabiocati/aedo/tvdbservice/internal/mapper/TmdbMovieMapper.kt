@@ -7,6 +7,7 @@ import app.moviebase.tmdb.model.TmdbMovie
 import app.moviebase.tmdb.model.TmdbMovieDetail
 import app.moviebase.tmdb.model.TmdbVideoSite
 import app.moviebase.tmdb.model.TmdbVideoType
+import com.fabiocati.aedo.models.CastMember
 import com.fabiocati.aedo.models.Movie
 import com.fabiocati.aedo.models.MovieDetails
 import kotlin.time.DurationUnit
@@ -76,7 +77,15 @@ internal class TmdbMovieMapper(
                 )
             },
             genres = tmdbMovie.genres.map { it.name },
-            cast = tmdbMovie.credits?.cast?.map { it.name } ?: emptyList(),
+            cast = tmdbMovie.credits?.cast?.map {
+                CastMember(
+                    name = it.name,
+                    character = it.character,
+                    profilePath = it.profilePath?.let { path ->
+                        TmdbImageUrlBuilder.build(path, TmdbImageSize.PROFILE_W185)
+                    },
+                )
+            } ?: emptyList(),
             crew = tmdbMovie.credits?.crew?.map { it.name } ?: emptyList(),
             duration = tmdbMovie.runtime?.toDuration(DurationUnit.MINUTES),
             yearOfProduction = tmdbMovie.releaseDate,

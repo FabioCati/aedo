@@ -24,4 +24,6 @@ internal class MovieRepositoryImpl(
     }
 
     override suspend fun getMovieDetails(movieId: Int): MovieDetails = api.getMovieDetails(movieId = movieId)
+
+    override suspend fun getSimilarMovies(movieId: Int): Either<Exception, List<Movie>> = api.getSimilarMovies(movieId = movieId)
 }

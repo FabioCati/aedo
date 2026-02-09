@@ -10,4 +10,5 @@ interface MovieRepository {
     suspend fun getTrendingMovies(): Either<Exception, List<Movie>>
     suspend fun getStreamingServiceMovies(streamingService: StreamingService): Either<Exception, List<Movie>>
     suspend fun getMovieDetails(movieId: Int): MovieDetails
+    suspend fun getSimilarMovies(movieId: Int): Either<Exception, List<Movie>>
 }

@@ -11,7 +11,7 @@ data class MovieDetails(
     val backdropPath: String?,
     val logoPath: String?,
     val genres: List<String>,
-    val cast: List<String>, // Cast
+    val cast: List<CastMember>,
     val crew: List<String>,
     val duration: Duration?,
     val yearOfProduction : LocalDate?,

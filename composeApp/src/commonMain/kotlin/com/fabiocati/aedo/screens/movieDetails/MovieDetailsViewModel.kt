@@ -2,6 +2,7 @@ package com.fabiocati.aedo.screens.movieDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import arrow.core.Either
 import com.fabiocati.aedo.data.movies.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,12 +20,21 @@ class MovieDetailsViewModel(
 
     init {
         loadMovieDetails()
+        loadSimilarMovies()
     }
 
     private fun loadMovieDetails() {
         viewModelScope.launch {
             val movieDetails = movieRepository.getMovieDetails(movieId)
             _uiState.update { it.copy(movieDetails = movieDetails) }
+        }
+    }
+
+    private fun loadSimilarMovies() {
+        viewModelScope.launch {
+            val movies = movieRepository.getSimilarMovies(movieId)
+            if (movies !is Either.Right) return@launch
+            _uiState.update { it.copy(similarMovies = movies.value) }
         }
     }
 

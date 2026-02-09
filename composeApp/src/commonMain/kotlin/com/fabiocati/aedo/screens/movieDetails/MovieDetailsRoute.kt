@@ -13,13 +13,15 @@ fun MovieDetailsRoute(
     viewModel: MovieDetailsViewModel = koinViewModel {
         parametersOf(movieId)
     },
-    onTrailerClick: (trailer: Trailer) -> Unit
+    onTrailerClick: (trailer: Trailer) -> Unit,
+    onMovieClick: (movieId: Int) -> Unit,
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     MovieDetailsScreen(
         uiState = uiState,
-        onTrailerClick = onTrailerClick
+        onTrailerClick = onTrailerClick,
+        onMovieClick = onMovieClick,
     )
 }

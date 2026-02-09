@@ -77,9 +77,23 @@ internal class MoviesApiImpl(
         val detail = tmdb.movies.getDetails(
             movieId = movieId,
             language = "en-US",
-            appendResponses = listOf(AppendResponse.IMAGES, AppendResponse.VIDEOS)
+            appendResponses = listOf(AppendResponse.IMAGES, AppendResponse.VIDEOS, AppendResponse.CREDITS)
         )
         return mapper.toMovieDetails(detail)
+    }
+
+    override suspend fun getSimilarMovies(movieId: Int): Either<Exception, List<Movie>> {
+        val moviesResult = try {
+            tmdb.movies.getSimilar(movieId = movieId, page = 1).results
+        } catch (e: Exception) {
+            return Either.Left(e)
+        }
+        val movies = coroutineScope {
+            moviesResult.map { movie ->
+                async { mapper.toMovie(movie) }
+            }.awaitAll()
+        }
+        return Either.Right(movies)
     }
 
     override suspend fun getStreamingServiceMovies(streamingService: StreamingService, page: Int): Either<Exception, List<Movie>> {

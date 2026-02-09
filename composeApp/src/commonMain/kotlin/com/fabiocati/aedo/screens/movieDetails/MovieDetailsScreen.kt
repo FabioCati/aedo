@@ -36,6 +36,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.fabiocati.aedo.AedoTheme
+import com.fabiocati.aedo.components.CastItem
 import com.fabiocati.aedo.components.LogoTitleComponent
 import com.fabiocati.aedo.components.TrailerItem
 import com.fabiocati.aedo.models.Trailer
@@ -48,6 +49,7 @@ import kotlin.time.DurationUnit
 fun MovieDetailsScreen(
     uiState: MovieDetailsScreenUiState,
     onTrailerClick: (trailer: Trailer) -> Unit,
+    onMovieClick: (movieId: Int) -> Unit = {},
 ) {
     val movie = uiState.movieDetails
     Box(
@@ -146,6 +148,59 @@ fun MovieDetailsScreen(
                                 trailer = trailer,
                                 onClick = onTrailerClick,
                             )
+                        }
+                    }
+                }
+            }
+            item {
+                Column {
+                    Text(
+                        text = "Cast & Crew",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 16.dp)
+                    ) {
+                        items(movie?.cast ?: emptyList()) { castMember ->
+                            CastItem(castMember = castMember)
+                        }
+                    }
+                }
+            }
+            if (uiState.similarMovies.isNotEmpty()) {
+                item {
+                    Column(modifier = Modifier.padding(bottom = 12.dp)) {
+                        Text(
+                            text = "Correlated",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                        LazyRow(
+                            contentPadding = PaddingValues(horizontal = 16.dp)
+                        ) {
+                            items(uiState.similarMovies) { movie ->
+                                AsyncImage(
+                                    model = movie.posterPath,
+                                    contentScale = ContentScale.Crop,
+                                    contentDescription = movie.title,
+                                    modifier = Modifier
+                                        .padding(horizontal = 4.dp)
+                                        .height(170.dp)
+                                        .width(120.dp)
+                                        .border(
+                                            width = 1.dp,
+                                            color = MaterialTheme.colorScheme.inverseOnSurface,
+                                            shape = RoundedCornerShape(12.dp)
+                                        )
+                                        .clip(shape = RoundedCornerShape(12.dp))
+                                        .clickable { onMovieClick(movie.id) }
+                                )
+                            }
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package com.fabiocati.aedo.models.fake
 
+import com.fabiocati.aedo.models.CastMember
 import com.fabiocati.aedo.models.Movie
 import com.fabiocati.aedo.models.MovieDetails
 import com.fabiocati.aedo.models.Trailer
@@ -24,7 +25,11 @@ val lordOfTheRingsDetails = MovieDetails(
     backdropPath = "https://image.tmdb.org/t/p/original/2u7zbn8EudG6kLlBzUYqP8RyFU4.jpg",
     logoPath = "https://image.tmdb.org/t/p/original/pkbf6VOHXNDhnXZI4uZQGwfHTR4.png",
     genres = listOf("Fantasy"),
-    cast = listOf("Fantasy"),
+    cast = listOf(
+        CastMember(name = "Elijah Wood", character = "Frodo Baggins", profilePath = null),
+        CastMember(name = "Ian McKellen", character = "Gandalf", profilePath = null),
+        CastMember(name = "Viggo Mortensen", character = "Aragorn", profilePath = null),
+    ),
     crew = listOf("Fantasy"),
     duration = 120.toDuration(DurationUnit.MINUTES),
     yearOfProduction = LocalDate(2003, 12, 19),
