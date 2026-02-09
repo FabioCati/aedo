@@ -59,6 +59,9 @@ fun App() {
                         },
                         onMovieClick = { movieId ->
                             backStack.add(Destination.MovieDetail(movieId))
+                        },
+                        onBackClick = {
+                            backStack.removeLastOrNull()
                         }
                     )
                 }

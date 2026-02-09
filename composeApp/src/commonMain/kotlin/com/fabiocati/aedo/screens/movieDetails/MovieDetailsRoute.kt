@@ -15,6 +15,7 @@ fun MovieDetailsRoute(
     },
     onTrailerClick: (trailer: Trailer) -> Unit,
     onMovieClick: (movieId: Int) -> Unit,
+    onBackClick: () -> Unit,
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -23,5 +24,6 @@ fun MovieDetailsRoute(
         uiState = uiState,
         onTrailerClick = onTrailerClick,
         onMovieClick = onMovieClick,
+        onBackClick = onBackClick,
     )
 }
