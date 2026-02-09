@@ -40,27 +40,9 @@ fun HomeScreenCategoryList(
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
             items(items = movies) { movie ->
-                AsyncImage(
-                    model = movie.posterPath,
-                    contentScale = ContentScale.Crop,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .padding(horizontal = 4.dp)
-                        .height(170.dp)
-                        .width(120.dp)
-                        .border(
-                            width = 1.dp,
-                            color = MaterialTheme.colorScheme.inverseOnSurface,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .clip(
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .clickable(
-                            onClick = {
-                                onMovieClicked(movie)
-                            }
-                        )
+                MovieItem(
+                    movie = movie,
+                    onMovieClicked = onMovieClicked
                 )
             }
         }
