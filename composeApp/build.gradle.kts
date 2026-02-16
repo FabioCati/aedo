@@ -48,6 +48,7 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             implementation(libs.androidx.compose.material3)
+            implementation(libs.androidx.compose.material3.adaptive.navigation)
             implementation(libs.bundles.arrowKt)
             implementation(libs.kotlinx.datetime)
             implementation(project.dependencies.platform(libs.koin.bom))
