@@ -73,13 +73,17 @@ internal class MoviesApiImpl(
         return Either.Right(movies)
     }
 
-    override suspend fun getMovieDetails(movieId: Int): MovieDetails {
-        val detail = tmdb.movies.getDetails(
-            movieId = movieId,
-            language = "en-US",
-            appendResponses = listOf(AppendResponse.IMAGES, AppendResponse.VIDEOS, AppendResponse.CREDITS)
-        )
-        return mapper.toMovieDetails(detail)
+    override suspend fun getMovieDetails(movieId: Int): Either<Exception, MovieDetails> {
+        return try {
+            val detail = tmdb.movies.getDetails(
+                movieId = movieId,
+                language = "en-US",
+                appendResponses = listOf(AppendResponse.IMAGES, AppendResponse.VIDEOS, AppendResponse.CREDITS)
+            )
+            Either.Right(mapper.toMovieDetails(detail))
+        } catch (e: Exception) {
+            Either.Left(e)
+        }
     }
 
     override suspend fun getSimilarMovies(movieId: Int): Either<Exception, List<Movie>> {

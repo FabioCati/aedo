@@ -25,8 +25,10 @@ class MovieDetailsViewModel(
 
     private fun loadMovieDetails() {
         viewModelScope.launch {
-            val movieDetails = movieRepository.getMovieDetails(movieId)
-            _uiState.update { it.copy(movieDetails = movieDetails) }
+            val result = movieRepository.getMovieDetails(movieId)
+            if (result is Either.Right) {
+                _uiState.update { it.copy(movieDetails = result.value) }
+            }
         }
     }
 

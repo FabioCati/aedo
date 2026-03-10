@@ -44,7 +44,7 @@ internal class MovieRepositoryImpl(
         return streamingServiceMovies
     }
 
-    override suspend fun getMovieDetails(movieId: Int): MovieDetails = api.getMovieDetails(movieId = movieId)
+    override suspend fun getMovieDetails(movieId: Int): Either<Exception, MovieDetails> = api.getMovieDetails(movieId = movieId)
 
     override suspend fun getSimilarMovies(movieId: Int): Either<Exception, List<Movie>> {
         val similarMovies = api.getSimilarMovies(movieId = movieId)
