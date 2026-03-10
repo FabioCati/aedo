@@ -26,7 +26,11 @@ object TvdbServiceModule {
             )
         }
         single<Tmdb3> {
-            Tmdb3(tmdbApiKey = Secrets.TVDB_API_KEY)
+            Tmdb3 {
+                tmdbApiKey = Secrets.TVDB_API_KEY
+                useTimeout = false
+                maxRequestRetries = null
+            }
         }
         factory {
             TmdbTrailerMapper()
