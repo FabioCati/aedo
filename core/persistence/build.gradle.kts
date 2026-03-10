@@ -2,15 +2,13 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.androidLint)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
-
-    // Target declarations - add or remove as needed below. These define
-    // which platforms this KMP module supports.
-    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.fabiocati.aedo.data.movies"
+        namespace = "com.fabiocati.aedo.persistence"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -24,14 +22,7 @@ kotlin {
         }
     }
 
-    // For iOS targets, this is also where you should
-    // configure native binary output. For more information, see:
-    // https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
-
-    // A step-by-step guide on how to include this library in an XCode
-    // project can be found here:
-    // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "data:moviesKit"
+    val xcfName = "core:persistenceKit"
 
     iosX64 {
         binaries.framework {
@@ -55,11 +46,17 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(libs.room.runtime)
+                implementation(libs.sqlite.bundled)
                 implementation(libs.koin.core)
-                implementation(libs.bundles.arrowKt)
-                implementation(project(":core:tvdbService"))
-                implementation(project(":core:persistence"))
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(project(":models"))
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(libs.koin.android)
             }
         }
 
@@ -69,5 +66,15 @@ kotlin {
             }
         }
     }
+}
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
 }
