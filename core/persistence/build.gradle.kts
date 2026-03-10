@@ -50,6 +50,7 @@ kotlin {
                 implementation(libs.sqlite.bundled)
                 implementation(libs.koin.core)
                 implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.datetime)
                 implementation(project(":models"))
             }
         }
