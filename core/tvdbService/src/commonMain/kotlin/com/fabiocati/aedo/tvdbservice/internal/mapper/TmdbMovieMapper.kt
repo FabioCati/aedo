@@ -18,11 +18,11 @@ internal class TmdbMovieMapper(
     private val trailerMapper: TmdbTrailerMapper
 ) {
 
-    suspend fun toMovie(tmdbMovie: TmdbMovie): Movie {
-        val logoImage = tmdb.movies.getImages(
+    suspend fun toMovie(tmdbMovie: TmdbMovie, getLogo: Boolean = false): Movie {
+        val logoImage = if(getLogo) tmdb.movies.getImages(
             movieId = tmdbMovie.id,
             language = "en-US"
-        ).logos.firstOrNull()
+        ).logos.firstOrNull() else null
         return Movie(
             id = tmdbMovie.id,
             title = tmdbMovie.title,

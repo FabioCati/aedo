@@ -66,7 +66,7 @@ internal class MoviesApiImpl(
                 } ?: false
             }.map { movie ->
                 async {
-                    mapper.toMovie(movie)
+                    mapper.toMovie(movie, getLogo = true)
                 }
             }.awaitAll()
         }
