@@ -45,6 +45,7 @@ import com.fabiocati.aedo.AedoTheme
 import com.fabiocati.aedo.components.CastItem
 import com.fabiocati.aedo.components.LogoTitleComponent
 import com.fabiocati.aedo.components.MovieItem
+import com.fabiocati.aedo.components.ReviewItem
 import com.fabiocati.aedo.components.TrailerItem
 import com.fabiocati.aedo.models.Trailer
 import com.fabiocati.aedo.models.fake.lordOfTheRingsDetails
@@ -192,6 +193,21 @@ fun MovieDetailsScreen(
                             CastItem(castMember = castMember)
                         }
                     }
+                }
+            }
+            if (!movie?.reviews.isNullOrEmpty()) {
+                val reviews = movie.reviews
+                item {
+                    Text(
+                        text = "Reviews",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                items(reviews) { review ->
+                    ReviewItem(review = review)
                 }
             }
             if (uiState.similarMovies.isNotEmpty()) {

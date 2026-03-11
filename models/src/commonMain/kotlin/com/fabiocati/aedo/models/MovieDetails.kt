@@ -16,5 +16,6 @@ data class MovieDetails(
     val duration: Duration?,
     val yearOfProduction : LocalDate?,
     val trailers: List<Trailer>,
-    val languages: List<String>
+    val languages: List<String>,
+    val reviews: List<Review>
 )

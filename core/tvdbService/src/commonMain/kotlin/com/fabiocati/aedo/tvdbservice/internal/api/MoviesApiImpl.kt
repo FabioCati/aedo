@@ -3,7 +3,6 @@ package com.fabiocati.aedo.tvdbservice.internal.api
 import app.moviebase.tmdb.Tmdb3
 import app.moviebase.tmdb.discover.DiscoverCategory
 import app.moviebase.tmdb.model.AppendResponse
-import app.moviebase.tmdb.model.TmdbMediaType
 import app.moviebase.tmdb.model.TmdbMovie
 import app.moviebase.tmdb.model.TmdbTimeWindow
 import arrow.core.Either
@@ -13,7 +12,6 @@ import com.fabiocati.aedo.models.StreamingService
 import com.fabiocati.aedo.tvdbservice.MoviesApi
 import com.fabiocati.aedo.tvdbservice.internal.mapper.StreamingServiceMapper
 import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbMovieMapper
-import com.fabiocati.aedo.tvdbservice.internal.mapper.TmdbTrailerMapper
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -78,7 +76,7 @@ internal class MoviesApiImpl(
             val detail = tmdb.movies.getDetails(
                 movieId = movieId,
                 language = "en-US",
-                appendResponses = listOf(AppendResponse.IMAGES, AppendResponse.VIDEOS, AppendResponse.CREDITS)
+                appendResponses = listOf(AppendResponse.IMAGES, AppendResponse.VIDEOS, AppendResponse.CREDITS, AppendResponse.REVIEWS)
             )
             Either.Right(mapper.toMovieDetails(detail))
         } catch (e: Exception) {

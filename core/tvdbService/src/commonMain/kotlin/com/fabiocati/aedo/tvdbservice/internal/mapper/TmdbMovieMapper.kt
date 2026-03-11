@@ -5,11 +5,13 @@ import app.moviebase.tmdb.image.TmdbImageSize
 import app.moviebase.tmdb.image.TmdbImageUrlBuilder
 import app.moviebase.tmdb.model.TmdbMovie
 import app.moviebase.tmdb.model.TmdbMovieDetail
+import app.moviebase.tmdb.model.TmdbReview
 import app.moviebase.tmdb.model.TmdbVideoSite
 import app.moviebase.tmdb.model.TmdbVideoType
 import com.fabiocati.aedo.models.CastMember
 import com.fabiocati.aedo.models.Movie
 import com.fabiocati.aedo.models.MovieDetails
+import com.fabiocati.aedo.models.Review
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -25,7 +27,7 @@ internal class TmdbMovieMapper(
         ).logos.firstOrNull() else null
         return Movie(
             id = tmdbMovie.id,
-            title = tmdbMovie.title,
+            title = tmdbMovie.title ?: "",
             overview = tmdbMovie.overview,
             posterPath = tmdbMovie.posterPath?.let {
                 TmdbImageUrlBuilder.build(
@@ -56,7 +58,7 @@ internal class TmdbMovieMapper(
 
         return MovieDetails(
             id = tmdbMovie.id,
-            title = tmdbMovie.title,
+            title = tmdbMovie.title ?: "",
             overview = tmdbMovie.overview ?: "",
             posterPath = tmdbMovie.posterImage?.let {
                 TmdbImageUrlBuilder.build(
@@ -79,18 +81,31 @@ internal class TmdbMovieMapper(
             genres = tmdbMovie.genres.map { it.name },
             cast = tmdbMovie.credits?.cast?.map {
                 CastMember(
-                    name = it.name,
-                    character = it.character,
+                    name = it.name ?: "",
+                    character = it.character ?: "",
                     profilePath = it.profilePath?.let { path ->
                         TmdbImageUrlBuilder.build(path, TmdbImageSize.PROFILE_W185)
                     },
                 )
             } ?: emptyList(),
-            crew = tmdbMovie.credits?.crew?.map { it.name } ?: emptyList(),
+            crew = tmdbMovie.credits?.crew?.map { it.name ?: "" } ?: emptyList(),
             duration = tmdbMovie.runtime?.toDuration(DurationUnit.MINUTES),
             yearOfProduction = tmdbMovie.releaseDate,
             trailers = trailers,
             languages = listOf(tmdbMovie.originalLanguage ?: ""),
+            reviews = tmdbMovie.reviews?.results?.map { toReview(it) } ?: emptyList()
+        )
+    }
+
+    private fun toReview(tmdbReview: TmdbReview): Review {
+        return Review(
+            author = tmdbReview.author,
+            content = tmdbReview.content,
+            authorAvatarUrl = tmdbReview.authorDetails?.avatarPath?.let {
+                TmdbImageUrlBuilder.build(it, TmdbImageSize.PROFILE_W185)
+            },
+            rating = tmdbReview.authorDetails?.rating?.toDouble(),
+            createdAt = tmdbReview.createdAt.toString()
         )
     }
 }

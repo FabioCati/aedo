@@ -39,4 +39,5 @@ val lordOfTheRingsDetails = MovieDetails(
         thumbnail = ""
     )),
     languages = listOf("italian", "english"),
+    reviews = emptyList()
 )

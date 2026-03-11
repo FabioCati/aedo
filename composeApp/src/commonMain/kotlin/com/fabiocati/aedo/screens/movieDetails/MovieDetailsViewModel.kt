@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either
 import com.fabiocati.aedo.data.movies.MovieRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +26,7 @@ class MovieDetailsViewModel(
     }
 
     private fun loadMovieDetails() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = movieRepository.getMovieDetails(movieId)
             if (result is Either.Right) {
                 _uiState.update { it.copy(movieDetails = result.value) }
@@ -33,7 +35,7 @@ class MovieDetailsViewModel(
     }
 
     private fun loadSimilarMovies() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val movies = movieRepository.getSimilarMovies(movieId)
             if (movies !is Either.Right) return@launch
             _uiState.update { it.copy(similarMovies = movies.value) }

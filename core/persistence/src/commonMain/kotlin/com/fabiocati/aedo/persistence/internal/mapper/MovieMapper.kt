@@ -35,7 +35,8 @@ internal fun MovieDetailsCompositeEntity.toMovieDetails(): MovieDetails {
         duration = details?.duration,
         yearOfProduction = details?.yearOfProduction,
         trailers = trailers.map { Trailer(it.url, it.title, it.thumbnail) },
-        languages = languages.map { it.language }
+        languages = languages.map { it.language },
+        reviews = emptyList()
     )
 }
 
