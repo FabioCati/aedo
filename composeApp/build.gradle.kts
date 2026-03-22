@@ -58,6 +58,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel.navigation)
             implementation(project(":data:movies"))
             implementation(project(":models"))
+            implementation(project(":core:summarizer"))
         }
         appleMain.dependencies {
             implementation(libs.ktor.client.darwin)

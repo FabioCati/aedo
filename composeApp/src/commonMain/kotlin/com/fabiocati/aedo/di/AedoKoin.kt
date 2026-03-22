@@ -3,6 +3,7 @@ package com.fabiocati.aedo.di
 import com.fabiocati.aedo.data.movies.di.MoviesModule
 import com.fabiocati.aedo.screens.home.HomeViewModel
 import com.fabiocati.aedo.screens.movieDetails.MovieDetailsViewModel
+import com.fabiocati.aedo.summarizer.di.summarizerModule
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
@@ -20,7 +21,8 @@ fun initKoin(
             modules(platformModule)
         }
         modules(
-            MoviesModule.get()
+            MoviesModule.get(),
+            summarizerModule
         )
         modules(
             module {
@@ -32,7 +34,8 @@ fun initKoin(
                 viewModel { params ->
                     MovieDetailsViewModel(
                         movieId = params.get(),
-                        movieRepository = get()
+                        movieRepository = get(),
+                        reviewSummarizer = get()
                     )
                 }
             }

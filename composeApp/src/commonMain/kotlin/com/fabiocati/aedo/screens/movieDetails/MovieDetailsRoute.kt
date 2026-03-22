@@ -25,5 +25,8 @@ fun MovieDetailsRoute(
         onTrailerClick = onTrailerClick,
         onMovieClick = onMovieClick,
         onBackClick = onBackClick,
+        onSummarizeClick = viewModel::summarizeReviews,
+        onDownloadClick = viewModel::downloadSummarizerModel,
+        onDismissSummary = viewModel::dismissSummary
     )
 }
