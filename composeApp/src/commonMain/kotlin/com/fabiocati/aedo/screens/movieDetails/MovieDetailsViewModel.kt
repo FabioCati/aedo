@@ -64,7 +64,7 @@ class MovieDetailsViewModel(
 
         _uiState.update { it.copy(summaryResult = SummaryResult.Loading) }
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val summary = reviewSummarizer.summarize(reviews)
             _uiState.update { it.copy(summaryResult = SummaryResult.Success(summary)) }
         }

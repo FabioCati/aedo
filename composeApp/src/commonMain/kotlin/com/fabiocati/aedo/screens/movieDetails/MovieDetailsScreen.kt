@@ -369,7 +369,7 @@ fun SummarizeButton(
             }
         }
         is ReviewSummarizer.Status.Error -> {
-            Text(text = "AI Error", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.labelSmall)
+            Text(text = "AI Error - ${status.message}", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.labelSmall)
         }
     }
 }

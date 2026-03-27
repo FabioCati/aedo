@@ -3,6 +3,7 @@ package com.fabiocati.aedo.di
 import com.fabiocati.aedo.data.movies.di.MoviesModule
 import com.fabiocati.aedo.screens.home.HomeViewModel
 import com.fabiocati.aedo.screens.movieDetails.MovieDetailsViewModel
+import com.fabiocati.aedo.screens.settings.SettingsViewModel
 import com.fabiocati.aedo.summarizer.di.summarizerModule
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -37,6 +38,9 @@ fun initKoin(
                         movieRepository = get(),
                         reviewSummarizer = get()
                     )
+                }
+                viewModel {
+                    SettingsViewModel(settingsRepository = get())
                 }
             }
         )

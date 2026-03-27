@@ -15,6 +15,5 @@ interface ReviewSummarizer {
     fun downloadModel()
 
     suspend fun summarize(reviews: List<String>): String
-
     fun close()
 }

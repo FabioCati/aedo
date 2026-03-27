@@ -59,6 +59,7 @@ kotlin {
             implementation(project(":data:movies"))
             implementation(project(":models"))
             implementation(project(":core:summarizer"))
+            implementation(project(":core:persistence"))
         }
         appleMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -99,4 +100,3 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-

@@ -25,6 +25,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.koin.core)
+                implementation(project(":core:persistence"))
             }
         }
 
@@ -33,6 +34,7 @@ kotlin {
                 implementation(libs.koin.android)
                 implementation(libs.mlkit.summarization)
                 implementation(libs.kotlinx.coroutines.play.services)
+                implementation(libs.litertlm.android)
             }
         }
     }

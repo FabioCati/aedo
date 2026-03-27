@@ -21,6 +21,7 @@ import com.fabiocati.aedo.navigation.scenes.AedoListDetailSceneStrategy
 import com.fabiocati.aedo.navigation.scenes.rememberAedoListDetailSceneStrategy
 import com.fabiocati.aedo.screens.home.HomeRoute
 import com.fabiocati.aedo.screens.movieDetails.MovieDetailsRoute
+import com.fabiocati.aedo.screens.settings.SettingsRoute
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import org.koin.compose.getKoin
@@ -36,6 +37,7 @@ fun App() {
                     polymorphic(NavKey::class) {
                         subclass(Destination.Home::class, Destination.Home.serializer())
                         subclass(Destination.MovieDetail::class, Destination.MovieDetail.serializer())
+                        subclass(Destination.Settings::class, Destination.Settings.serializer())
                     }
                 }
             },
@@ -57,6 +59,9 @@ fun App() {
                     HomeRoute(
                         onMovieClicked = { movieId ->
                             backStack.add(Destination.MovieDetail(movieId))
+                        },
+                        onSettingsClicked = {
+                            backStack.add(Destination.Settings)
                         }
                     )
                 }
@@ -72,6 +77,16 @@ fun App() {
                         onMovieClick = { movieId ->
                             backStack.add(Destination.MovieDetail(movieId))
                         },
+                        onBackClick = {
+                            backStack.removeLastOrNull()
+                        }
+                    )
+                }
+
+                entry<Destination.Settings>(
+                    metadata = ListDetailSceneStrategy.detailPane()
+                ) {
+                    SettingsRoute(
                         onBackClick = {
                             backStack.removeLastOrNull()
                         }

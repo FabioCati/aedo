@@ -8,6 +8,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun HomeRoute(
     onMovieClicked: (Int) -> Unit,
+    onSettingsClicked: () -> Unit,
     viewModel: HomeViewModel = koinViewModel()
 ) {
 
@@ -16,5 +17,6 @@ fun HomeRoute(
     HomeScreen(
         uiState = uiState,
         onMovieClicked = onMovieClicked,
+        onSettingsClicked = onSettingsClicked,
     )
 }
