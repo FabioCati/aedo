@@ -1,6 +1,7 @@
 package com.fabiocati.aedo.summarizer
 
 import android.content.Context
+import com.fabiocati.aedo.models.Review
 import com.google.mlkit.genai.common.DownloadCallback
 import com.google.mlkit.genai.common.FeatureStatus
 import com.google.mlkit.genai.common.GenAiException
@@ -37,6 +38,9 @@ class AndroidReviewSummarizer(
 
     private val _status = MutableStateFlow<ReviewSummarizer.Status>(ReviewSummarizer.Status.NotAvailable)
     override val status: StateFlow<ReviewSummarizer.Status> = _status.asStateFlow()
+
+    private val _conversation = MutableStateFlow<String>("")
+    override val conversation: StateFlow<String> = _conversation.asStateFlow()
 
     private fun checkStatus() {
         val scope = CoroutineScope(Dispatchers.IO)
@@ -82,16 +86,20 @@ class AndroidReviewSummarizer(
 
     }
 
-    override suspend fun summarize(reviews: List<String>): String {
-        val text = reviews.joinToString("\n\n")
+    override suspend fun summarize(reviews: List<Review>): String {
+        val text = reviews.joinToString("\n\n") { it.content }
         val request = SummarizationRequest.builder(text).build()
         return try {
             val result = withContext(Dispatchers.IO) {
                 summarizer.runInference(request).get()
             }
-            result.summary.substringAfter("*").trim()
+            val summary = result.summary.substringAfter("*").trim()
+            _conversation.value += summary
+            summary
         } catch (e: Exception) {
-            "Failed to summarize reviews: ${e.message}"
+            val error = "Failed to summarize reviews: ${e.message}"
+            _conversation.value += error
+            error
         }
     }
 

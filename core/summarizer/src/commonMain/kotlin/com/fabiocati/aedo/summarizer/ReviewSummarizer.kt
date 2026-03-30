@@ -1,5 +1,6 @@
 package com.fabiocati.aedo.summarizer
 
+import com.fabiocati.aedo.models.Review
 import kotlinx.coroutines.flow.StateFlow
 
 interface ReviewSummarizer {
@@ -11,9 +12,10 @@ interface ReviewSummarizer {
     }
 
     val status: StateFlow<Status>
+    val conversation: StateFlow<String>
 
     fun downloadModel()
 
-    suspend fun summarize(reviews: List<String>): String
+    suspend fun summarize(reviews: List<Review>): String
     fun close()
 }

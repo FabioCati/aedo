@@ -27,6 +27,12 @@ class MovieDetailsViewModel(
         loadMovieDetails()
         loadSimilarMovies()
         observeSummarizerStatus()
+        viewModelScope.launch(Dispatchers.IO) {
+            reviewSummarizer.conversation.collect { chat ->
+                if(chat.isEmpty()) return@collect
+                _uiState.update { it.copy(summaryResult = SummaryResult.Success(chat)) }
+            }
+        }
     }
 
     private fun loadMovieDetails() {
@@ -59,7 +65,7 @@ class MovieDetailsViewModel(
     }
 
     fun summarizeReviews() {
-        val reviews = uiState.value.movieDetails?.reviews?.map { it.content } ?: return
+        val reviews = uiState.value.movieDetails?.reviews ?: return
         if (reviews.isEmpty()) return
 
         _uiState.update { it.copy(summaryResult = SummaryResult.Loading) }

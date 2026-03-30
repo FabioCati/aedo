@@ -26,6 +26,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.koin.core)
                 implementation(project(":core:persistence"))
+                implementation(project(":models"))
             }
         }
 
