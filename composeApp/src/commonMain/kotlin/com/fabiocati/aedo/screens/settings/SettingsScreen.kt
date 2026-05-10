@@ -1,6 +1,8 @@
 package com.fabiocati.aedo.screens.settings
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -22,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fabiocati.aedo.components.FilePicker
@@ -37,7 +41,8 @@ fun SettingsRoute(
     SettingsScreen(
         uiState = uiState,
         onBackClick = onBackClick,
-        onFileSelected = { viewModel.setLiteRTModelPath(it) }
+        onFileSelected = { viewModel.setLiteRTModelPath(it) },
+        onUseLiteRTChanged = { viewModel.setUseLiteRT(it) }
     )
 }
 
@@ -46,7 +51,8 @@ fun SettingsRoute(
 fun SettingsScreen(
     uiState: SettingsUiState,
     onBackClick: () -> Unit,
-    onFileSelected: (String?) -> Unit
+    onFileSelected: (String?) -> Unit,
+    onUseLiteRTChanged: (Boolean) -> Unit
 ) {
     var showFilePicker by remember { mutableStateOf(false) }
 
@@ -68,34 +74,59 @@ fun SettingsScreen(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            Text(
-                text = "LiteRT Model Configuration",
-                style = MaterialTheme.typography.titleMedium
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Use On-Device LiteRT Summarizer",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Switch(
+                    checked = uiState.useLiteRT,
+                    onCheckedChange = onUseLiteRTChanged
+                )
+            }
+            
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Select a local LiteRT model file (.litertlm) for review summarization.",
+                text = "Toggle to use a local LiteRT model instead of the Android Review Summarizer (Gemini API).",
                 style = MaterialTheme.typography.bodyMedium
             )
-            Spacer(modifier = Modifier.height(16.dp))
             
-            Text(
-                text = "Current Path:",
-                style = MaterialTheme.typography.labelLarge
-            )
-            Text(
-                text = uiState.liteRTModelPath ?: "No model selected",
-                style = MaterialTheme.typography.bodySmall,
-                color = if (uiState.liteRTModelPath == null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
-            )
-            
-            Spacer(modifier = Modifier.height(24.dp))
-            
-            Button(
-                onClick = { showFilePicker = true },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Select Model File")
+            if (uiState.useLiteRT) {
+                Spacer(modifier = Modifier.height(24.dp))
+                
+                Text(
+                    text = "LiteRT Model Configuration",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Select a local LiteRT model file (.litertlm) for review summarization.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Text(
+                    text = "Current Path:",
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Text(
+                    text = uiState.liteRTModelPath ?: "No model selected",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (uiState.liteRTModelPath == null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+                )
+                
+                Spacer(modifier = Modifier.height(24.dp))
+                
+                Button(
+                    onClick = { showFilePicker = true },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Select Model File")
+                }
             }
         }
     }

@@ -2,6 +2,8 @@ package com.fabiocati.aedo.persistence.di
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.fabiocati.aedo.persistence.IosSettingsRepository
+import com.fabiocati.aedo.persistence.SettingsRepository
 import com.fabiocati.aedo.persistence.internal.db.AppDatabase
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
@@ -17,6 +19,7 @@ actual val platformPersistenceModule: Module = module {
             name = dbFilePath,
         )
     }
+    single<SettingsRepository> { IosSettingsRepository() }
 }
 
 @OptIn(ExperimentalForeignApi::class)
