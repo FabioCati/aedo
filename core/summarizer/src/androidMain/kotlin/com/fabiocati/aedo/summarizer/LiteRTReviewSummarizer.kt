@@ -84,7 +84,6 @@ class LiteRTReviewSummarizer(
         } catch (e: Exception) {
             _status.value = ReviewSummarizer.Status.Error("Failed to initialize LiteRT Engine: ${e.message}")
         }
-
     }
 
     override suspend fun summarize(reviews: List<Review>): String {

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 
-class AndroidReviewSummarizer(
+class AndroidAICoreReviewSummarizer(
     private val context: Context,
 ) : ReviewSummarizer {
 
