@@ -32,7 +32,7 @@ room = "2.8.4"
 ksp = "2.3.5"
 sqlite = "2.6.2"
 mlkit-summarization = "1.0.0-beta1"
-litertlm = "0.9.0"
+litertlm = "0.13.1"
 
 [libraries]
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }

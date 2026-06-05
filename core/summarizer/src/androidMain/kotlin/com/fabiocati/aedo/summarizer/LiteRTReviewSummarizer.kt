@@ -74,7 +74,6 @@ class LiteRTReviewSummarizer(
         try {
             val config = EngineConfig(
                 modelPath = modelFile.absolutePath,
-                backend = Backend.CPU()
             )
             val newEngine = Engine(config)
             _status.value = ReviewSummarizer.Status.Downloading
