@@ -45,6 +45,24 @@ The project is highly modularized for better maintainability and separation of c
 - **Xcode** (for running the iOS application)
 - **TMDB API Key:** You'll need an API key from TMDB to fetch movie data.
 
+### TMDB API Key
+
+To fetch movie data, you need to provide a TMDB API key.
+
+1.  Obtain an API key from [The Movie Database (TMDB)](https://www.themoviedb.org/settings/api).
+2.  Create a file at `core/tvdbService/src/commonMain/kotlin/secrets/Secrets.kt`.
+3.  Add the following content to the file:
+
+```kotlin
+package secrets
+
+object Secrets {
+    const val TVDB_API_KEY = "your_tmdb_api_key_here"
+}
+```
+
+*Note: Although the constant is named `TVDB_API_KEY` in the codebase, it is specifically used for the TMDB (The Movie Database) API.*
+
 ### Build and Run
 
 #### Android
